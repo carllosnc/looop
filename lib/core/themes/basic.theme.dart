@@ -19,4 +19,38 @@ appTheme({required bool isLight}) => ThemeData(
           color: Colors.black,
         ),
       ),
+      inputDecorationTheme: InputDecorationTheme(
+        suffixIconColor: Colors.grey,
+        labelStyle: const TextStyle(
+          color: Colors.black,
+          fontSize: 16,
+          fontWeight: FontWeight.w400,
+        ),
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.black.withOpacity(0.3),
+            width: 1,
+          ),
+        ),
+        focusedBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.black,
+            width: 2.0,
+          ),
+        ),
+      ),
+      timePickerTheme: TimePickerThemeData(
+        backgroundColor: Colors.white,
+        dayPeriodTextColor: Colors.black,
+        hourMinuteTextColor: Colors.black,
+        helpTextStyle: const TextStyle(
+          color: Colors.black,
+          fontSize: 16,
+        ),
+        hourMinuteColor: Colors.black.withOpacity(0.1),
+        dayPeriodColor: Colors.black.withOpacity(0.1),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+      ),
     );
