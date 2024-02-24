@@ -1,1 +1,2 @@
-//export './entities/user/user.dart';
+export './entities/task/task.dart';
+export './entities/check/check.dart';
