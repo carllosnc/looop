@@ -3,3 +3,4 @@ export '/core/routes/router.dart';
 export '/core/shared_preferences/shared_preferences.dart';
 export '/core/constants/assets.dart';
 export '/core/constants/emojis.dart';
+export '/core/extensions/string.dart';
