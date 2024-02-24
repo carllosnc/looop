@@ -1,11 +1,18 @@
-import 'package:boxy/boxy.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_starter/imports/app.dart';
-import 'package:vw/vw.dart';
+import '/imports/app.dart';
 
 class EmojiSelect extends StatefulWidget {
+  final String? Function(String?)? validator;
+  final Function(String?) onChanged;
+  final TextStyle? style;
+  final String? initialValue;
+
   const EmojiSelect({
     super.key,
+    this.validator,
+    this.style,
+    this.initialValue,
+    required this.onChanged,
   });
 
   @override
@@ -14,62 +21,75 @@ class EmojiSelect extends StatefulWidget {
 
 class _EmojiSelectState extends State<EmojiSelect> {
   int isSelected = 0;
+  TextEditingController controller = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.initialValue != null) {
+      controller.text = widget.initialValue!;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return VWColumn(
-      gap: 5,
-      children: [
-        VWRow(
-          padding: const EdgeInsets.all(10),
-          horizontalAlignment: MainAxisAlignment.center,
-          verticalAlignment: CrossAxisAlignment.center,
-          gap: 5,
-          children: [
-            const Text(
-              "Select icon:",
-              style: TextStyle(fontSize: 16),
-            ),
-            Text(
-              emojis[isSelected],
-              style: const TextStyle(fontSize: 25),
-            ),
-          ],
-        ),
-        Boxy(
-          height: 200,
-          child: GridView(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: 5),
-            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 60,
-              mainAxisExtent: 60,
-              crossAxisSpacing: 5,
-              mainAxisSpacing: 5,
-            ),
-            children: [
-              for (String item in emojis)
-                Boxy(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(8),
-                  splashColor: Colors.transparent,
-                  border: isSelected == emojis.indexOf(item) ? Border.all(color: Colors.black, width: 2) : null,
+    return TextFormField(
+      readOnly: true,
+      validator: widget.validator,
+      controller: controller,
+      style: widget.style,
+      decoration: const InputDecoration(
+        labelText: "Icon",
+        floatingLabelAlignment: FloatingLabelAlignment.start,
+        suffixIcon: Icon(Icons.emoji_emotions),
+      ),
+      onTap: () {
+        showModalBottomSheet(
+          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+          context: context,
+          builder: (context) {
+            return GridView.builder(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 6,
+              ),
+              itemCount: emojis.length,
+              itemBuilder: (context, index) {
+                return GestureDetector(
                   onTap: () {
                     setState(() {
-                      isSelected = emojis.indexOf(item);
+                      isSelected = index;
                     });
+
+                    controller.text = emojis[index];
+                    widget.onChanged(emojis[index]);
+                    Navigator.pop(context);
                   },
-                  child: Center(
-                    child: Text(
-                      item,
-                      style: const TextStyle(fontSize: 28),
+                  child: Container(
+                    margin: const EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(
+                        color: isSelected == index ? Colors.black : Colors.transparent,
+                        width: 2,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Center(
+                      child: Text(
+                        emojis[index],
+                        style: const TextStyle(fontSize: 25),
+                      ),
                     ),
                   ),
-                )
-            ],
-          ),
-        ),
-      ],
+                );
+              },
+            );
+          },
+        );
+      },
     );
   }
 }
