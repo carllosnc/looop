@@ -21,10 +21,11 @@ appTheme({required bool isLight}) => ThemeData(
       ),
       inputDecorationTheme: InputDecorationTheme(
         suffixIconColor: Colors.grey,
+        floatingLabelStyle: TextStyle(
+          color: Colors.blue[800],
+        ),
         labelStyle: const TextStyle(
           color: Colors.black,
-          fontSize: 16,
-          fontWeight: FontWeight.w400,
         ),
         enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(
@@ -37,6 +38,15 @@ appTheme({required bool isLight}) => ThemeData(
             color: Colors.black,
             width: 2.0,
           ),
+        ),
+      ),
+      //bottom sheet background white
+      bottomSheetTheme: BottomSheetThemeData(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        surfaceTintColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
         ),
       ),
       timePickerTheme: TimePickerThemeData(
