@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 sealed class AuthService {
@@ -6,8 +7,7 @@ sealed class AuthService {
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-      final GoogleSignInAuthentication? googleAuth =
-          await googleUser?.authentication;
+      final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
 
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth?.accessToken,
@@ -18,7 +18,8 @@ sealed class AuthService {
 
       return 'Welcome!';
     } catch (e) {
-      return 'Something went wrong. Please try again.';
+      debugPrint(e.toString());
+      return e.toString();
     }
   }
 }
