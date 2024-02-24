@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:vw/vw.dart';
 import '/imports/app.dart';
-import 'dart:math' as math;
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -39,11 +37,6 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
     }
   }
 
-  late final AnimationController _controller = AnimationController(
-    vsync: this,
-    duration: const Duration(seconds: 20),
-  )..repeat();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,54 +46,32 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
           horizontalAlignment: CrossAxisAlignment.center,
           verticalAlignment: MainAxisAlignment.center,
           padding: const EdgeInsets.all(20),
-          gap: 40,
+          gap: 20,
           children: [
-            AnimatedBuilder(
-              animation: _controller,
-              builder: (context, child) {
-                return Transform.rotate(
-                  angle: _controller.value * 2 * math.pi,
-                  child: child,
-                );
-              },
-              child: Image.asset(
-                Assets.logo,
-                width: 150,
-              ),
+            Image.asset(
+              Assets.logo,
+              width: 130,
             ),
-            VWColumn(
-              horizontalAlignment: CrossAxisAlignment.center,
-              verticalAlignment: MainAxisAlignment.center,
-              gap: 10,
-              children: [
-                Text(
-                  'ALL DAY',
-                  style: GoogleFonts.anton(
-                    fontSize: 40,
-                  ),
+            SizedBox(
+              width: 250,
+              child: Text(
+                'Monitore e registre suas atividades diárias de forma simples e rápida.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black.withOpacity(0.7),
                 ),
-                SizedBox(
-                  width: 250,
-                  child: Text(
-                    'Monitore e registre suas atividades diárias de forma simples e rápida.',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black.withOpacity(0.7),
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
           ],
         ),
       ),
       bottomNavigationBar: VWRow(
         padding: const EdgeInsets.all(20),
+        horizontalAlignment: MainAxisAlignment.center,
         children: [
           VWButton(
             color: Colors.black,
-            fullWidth: true,
             leftIcon: FontAwesomeIcons.google,
             label: "Entrar com Google",
             onTap: () {
