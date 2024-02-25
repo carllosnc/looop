@@ -34,7 +34,6 @@ class FormUpdateTask extends StatefulWidget {
 class _FormUpdateTaskState extends State<FormUpdateTask> {
   final formKey = GlobalKey<FormState>();
   final titleController = TextEditingController();
-  final descriptionController = TextEditingController();
   String rememberHour = "";
   String icon = "";
 
@@ -42,7 +41,6 @@ class _FormUpdateTaskState extends State<FormUpdateTask> {
   void initState() {
     super.initState();
     titleController.text = widget.task.title;
-    descriptionController.text = widget.task.description;
     rememberHour = widget.task.hour;
     icon = widget.task.icon;
   }
@@ -67,18 +65,6 @@ class _FormUpdateTaskState extends State<FormUpdateTask> {
                       ),
                       decoration: const InputDecoration(
                         labelText: "Título da tarefa",
-                        floatingLabelAlignment: FloatingLabelAlignment.start,
-                        suffixIcon: Icon(Icons.edit),
-                      ),
-                    ),
-                    TextFormField(
-                      validator: Validatorless.required("Required field"),
-                      controller: descriptionController,
-                      style: const TextStyle(
-                        fontSize: 20,
-                      ),
-                      decoration: const InputDecoration(
-                        labelText: "Descrição",
                         floatingLabelAlignment: FloatingLabelAlignment.start,
                         suffixIcon: Icon(Icons.edit),
                       ),
@@ -120,7 +106,7 @@ class _FormUpdateTaskState extends State<FormUpdateTask> {
                         icon = value!;
                       },
                     ),
-                    const SizedBox(height: 50),
+                    const SizedBox(height: 30),
                     VWButton(
                       color: Colors.black,
                       onTap: () async {
@@ -128,7 +114,6 @@ class _FormUpdateTaskState extends State<FormUpdateTask> {
                           await DataService.updateTask(
                             task: widget.task,
                             title: titleController.text,
-                            description: descriptionController.text,
                             hour: rememberHour,
                             icon: icon,
                             lastCheck: widget.task.lastCheck,
