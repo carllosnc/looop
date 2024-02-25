@@ -20,4 +20,6 @@ extension StringExtension on String {
   String formatName() {
     return split(' ')[0];
   }
+
+  String get inCaps => '${this[0].toUpperCase()}${substring(1)}';
 }
