@@ -32,7 +32,6 @@ class FormNewTask extends StatefulWidget {
 class _FormNewTaskState extends State<FormNewTask> {
   final formKey = GlobalKey<FormState>();
   final titleController = TextEditingController();
-  final descriptionController = TextEditingController();
   String timer = "";
   String emoji = "";
 
@@ -56,18 +55,6 @@ class _FormNewTaskState extends State<FormNewTask> {
                       ),
                       decoration: const InputDecoration(
                         labelText: "Título da tarefa",
-                        floatingLabelAlignment: FloatingLabelAlignment.start,
-                        suffixIcon: Icon(Icons.edit),
-                      ),
-                    ),
-                    TextFormField(
-                      validator: Validatorless.required("Required field"),
-                      controller: descriptionController,
-                      style: const TextStyle(
-                        fontSize: 20,
-                      ),
-                      decoration: const InputDecoration(
-                        labelText: "Descrição",
                         floatingLabelAlignment: FloatingLabelAlignment.start,
                         suffixIcon: Icon(Icons.edit),
                       ),
@@ -105,7 +92,7 @@ class _FormNewTaskState extends State<FormNewTask> {
                       },
                     ),
                     const SizedBox(
-                      height: 50,
+                      height: 30,
                     ),
                     VWButton(
                       color: Colors.black,
@@ -113,7 +100,6 @@ class _FormNewTaskState extends State<FormNewTask> {
                         if (formKey.currentState!.validate()) {
                           await DataService.addTask(
                             title: titleController.text,
-                            description: descriptionController.text,
                             hour: timer,
                             icon: emoji,
                           );
