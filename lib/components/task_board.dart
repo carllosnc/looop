@@ -20,12 +20,28 @@ class TaskBoard extends StatefulWidget {
 class _TaskBoardState extends State<TaskBoard> {
   int count = 0;
 
+  Color getFontColor(DateTime createdAt, DateTime today) {
+    if (createdAt.toCompare() == today.toCompare()) {
+      return Colors.white;
+    } else {
+      return Colors.white.withOpacity(0.6);
+    }
+  }
+
+  Color getBgColor(DateTime createdAt, DateTime today) {
+    if (createdAt.toCompare() == today.toCompare()) {
+      return Colors.green[700]!;
+    } else {
+      return Colors.white.withOpacity(0.15);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final DateTime today = DateTime.now();
     final createdAt = widget.task.createdAt;
-
     List<DateTime> days = [];
+    List<Check> allChecks = [];
 
     for (var i = 0; i < 200; i++) {
       days.add(createdAt.add(Duration(days: i)));
@@ -33,17 +49,22 @@ class _TaskBoardState extends State<TaskBoard> {
 
     return Boxy(
       width: double.infinity,
+      padding: const EdgeInsets.all(20),
       borderRadius: BorderRadius.circular(25),
-      padding: const EdgeInsets.only(bottom: 30),
-      color: Colors.black,
+      gradient: const LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [
+          Color.fromARGB(255, 43, 43, 43),
+          Colors.black,
+        ],
+      ),
       onTap: () {
-        openDetails(context, widget.task);
+        openDetails(context, widget.task, allChecks);
       },
       child: VWColumn(
-        gap: 20,
         children: [
           VWRow(
-            padding: const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 0),
             gap: 15,
             verticalAlignment: CrossAxisAlignment.center,
             children: [
@@ -58,7 +79,7 @@ class _TaskBoardState extends State<TaskBoard> {
                   gap: 2,
                   children: [
                     Text(
-                      widget.task.title,
+                      widget.task.title.inCaps,
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -70,7 +91,7 @@ class _TaskBoardState extends State<TaskBoard> {
                       widget.task.hour.formatHour(),
                       style: TextStyle(
                         fontSize: 14,
-                        color: Colors.white.withOpacity(0.8),
+                        color: Colors.white.withOpacity(0.6),
                       ),
                     ),
                   ],
@@ -119,7 +140,10 @@ class _TaskBoardState extends State<TaskBoard> {
                     },
                   ),
                 ),
-                loading: const SizedBox(),
+                loading: const CircularProgressIndicator(
+                  color: Colors.white,
+                  strokeWidth: 2,
+                ),
               )
             ],
           ),
@@ -127,74 +151,53 @@ class _TaskBoardState extends State<TaskBoard> {
             stream: DataService.getChecks(widget.task),
             success: (context, snapshot) {
               List<Check> checks = snapshot.data!.docs.map((e) => Check.fromJson(e.data())).toList();
+              checks.sort((a, b) => a.checkedAt.compareTo(b.checkedAt));
 
-              return GridDays(days: days, checks: checks);
-            },
-            noData: GridDays(days: days, checks: null),
-            loading: const Center(
-              child: Padding(
-                padding: EdgeInsets.all(10),
-                child: Text(
-                  '...',
-                  style: TextStyle(
-                    fontSize: 30,
-                    color: Colors.white,
+              return Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: GridView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  cacheExtent: 5000,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 5,
+                    crossAxisSpacing: 5,
+                    mainAxisSpacing: 5,
+                    childAspectRatio: 3.3,
                   ),
+                  itemCount: checks.length,
+                  itemBuilder: (context, index) {
+                    Check check = checks[index];
+
+                    return Boxy(
+                      color: getBgColor(check.checkedAt, today),
+                      borderRadius: BorderRadius.circular(100),
+                      child: Center(
+                        child: Text(
+                          textAlign: TextAlign.center,
+                          check.checkedAt.formatToBadge(),
+                          style: TextStyle(
+                            fontSize: 10.5,
+                            fontWeight: FontWeight.bold,
+                            color: getFontColor(check.checkedAt, today),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
                 ),
-              ),
-            ),
+              );
+            },
+            noData: const SizedBox(),
+            loading: const SizedBox(),
           ),
           // VWButton(
           //   label: "Test",
           //   onTap: () {
-          //     DataService.addCheckTest(widget.task, count = count + 3);
+          //     DataService.addCheckTest(widget.task, count = count + 1);
           //   },
           // ),
         ],
-      ),
-    );
-  }
-}
-
-class GridDays extends StatelessWidget {
-  final List<DateTime> days;
-  final List<Check>? checks;
-
-  const GridDays({
-    super.key,
-    required this.days,
-    required this.checks,
-  });
-
-  Color checkColor(DateTime day) {
-    bool hasCheck = checks!.any((e) => e.checkedAt.toCompare() == day.toCompare());
-
-    return hasCheck ? Colors.white : Colors.white.withOpacity(0.2);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Boxy(
-      height: 80,
-      child: GridView.builder(
-        physics: const BouncingScrollPhysics(),
-        shrinkWrap: true,
-        padding: const EdgeInsets.only(left: 23, right: 23, bottom: 0, top: 0),
-        scrollDirection: Axis.horizontal,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 5,
-          crossAxisSpacing: 5,
-          mainAxisSpacing: 5,
-        ),
-        itemCount: days.length,
-        itemBuilder: (context, index) {
-          return Container(
-            decoration: BoxDecoration(
-              color: checks != null ? checkColor(days[index]) : Colors.white.withOpacity(0.2),
-              borderRadius: BorderRadius.circular(15),
-            ),
-          );
-        },
       ),
     );
   }
