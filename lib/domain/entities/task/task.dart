@@ -6,7 +6,6 @@ part 'task.g.dart';
 class Task {
   final String id;
   final String title;
-  final String description;
   final String icon;
   final String hour;
   final DateTime createdAt;
@@ -15,7 +14,6 @@ class Task {
   Task({
     required this.id,
     required this.title,
-    required this.description,
     required this.hour,
     required this.icon,
     required this.createdAt,
