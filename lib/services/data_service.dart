@@ -7,7 +7,6 @@ sealed class DataService {
 
   static Future<void> addTask({
     required String title,
-    required String description,
     required String hour,
     required String icon,
   }) {
@@ -16,7 +15,6 @@ sealed class DataService {
     final task = Task(
       id: id,
       title: title,
-      description: description,
       hour: hour,
       icon: icon,
       createdAt: DateTime.now(),
@@ -28,7 +26,6 @@ sealed class DataService {
   static Future<void> updateTask({
     required Task task,
     required String title,
-    required String description,
     required String hour,
     required String icon,
     required DateTime? lastCheck,
@@ -36,7 +33,6 @@ sealed class DataService {
     final updatedTask = Task(
       id: task.id,
       title: title,
-      description: description,
       hour: hour,
       icon: icon,
       createdAt: task.createdAt,
