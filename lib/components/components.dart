@@ -7,4 +7,4 @@ export './task_list.dart';
 export './stream_firestore_builder.dart';
 export './delay_render.dart';
 export './update_task.dart';
-export './month_grid.dart';
+export 'progress_board.dart';
