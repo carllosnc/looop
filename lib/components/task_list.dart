@@ -11,18 +11,25 @@ class TaskList extends StatelessWidget {
     return StreamFirestoreQueryBuilder(
       stream: DataService.getTasks(),
       success: (context, snapshot) {
+        List<Task> tasks = snapshot.data!.docs.map((e) => Task.fromJson(e.data())).toList().cast<Task>();
+        tasks.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+        tasks = tasks.reversed.toList();
+
         return ListView.separated(
+          separatorBuilder: (context, index) => const SizedBox(
+            height: 5,
+          ),
           physics: const BouncingScrollPhysics(),
-          separatorBuilder: (context, index) => const SizedBox(height: 5),
+          cacheExtent: 5000,
           padding: const EdgeInsets.only(
             top: 0,
             left: 5,
             right: 5,
             bottom: 10,
           ),
-          itemCount: snapshot.data!.docs.length,
+          itemCount: tasks.length,
           itemBuilder: (context, index) {
-            Task task = Task.fromJson(snapshot.data!.docs[index].data());
+            final task = tasks[index];
 
             return TaskBoard(
               task: task,
