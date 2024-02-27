@@ -13,6 +13,7 @@ Task _$TaskFromJson(Map<String, dynamic> json) => Task(
       icon: json['icon'] as String,
       createdAt: DateTime.parse(json['createdAt'] as String),
       lastCheck: json['lastCheck'] == null ? null : DateTime.parse(json['lastCheck'] as String),
+      finished: json['finished'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$TaskToJson(Task instance) => <String, dynamic>{
@@ -22,4 +23,5 @@ Map<String, dynamic> _$TaskToJson(Task instance) => <String, dynamic>{
       'hour': instance.hour,
       'createdAt': instance.createdAt.toIso8601String(),
       'lastCheck': instance.lastCheck?.toIso8601String(),
+      'finished': instance.finished,
     };
