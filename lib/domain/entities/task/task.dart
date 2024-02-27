@@ -10,6 +10,7 @@ class Task {
   final String hour;
   final DateTime createdAt;
   final DateTime? lastCheck;
+  final bool finished;
 
   Task({
     required this.id,
@@ -18,6 +19,7 @@ class Task {
     required this.icon,
     required this.createdAt,
     this.lastCheck,
+    this.finished = false,
   });
 
   factory Task.fromJson(Map<String, dynamic> json) => _$TaskFromJson(json);
