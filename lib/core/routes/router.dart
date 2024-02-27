@@ -28,5 +28,9 @@ final router = GoRouter(
       path: '/home',
       builder: (context, state) => const HomePage(),
     ),
+    GoRoute(
+      path: '/finished',
+      builder: (context, state) => const FinishedPage(),
+    ),
   ],
 );
