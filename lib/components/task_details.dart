@@ -8,26 +8,41 @@ openDetails(BuildContext context, Task task, List<Check> checks) {
     level: 1,
     appBar: AppBar(
       actions: [
-        IconButton(
-          icon: const Icon(
-            Icons.share_outlined,
-            color: Colors.black,
-          ),
-          onPressed: () {
-            debugPrint('Share task');
-          },
-        ),
-        IconButton(
-          icon: const Icon(
-            Icons.edit_outlined,
-            color: Colors.black,
-          ),
-          onPressed: () {
-            updateTask(context: context, task: task);
-          },
-        ),
+        if (task.finished == false)
+          IconButton(
+            icon: Icon(
+              Icons.save_outlined,
+              color: Colors.black.withOpacity(0.7),
+            ),
+            onPressed: () async {
+              TaskService.finishTask(task);
+              Navigator.pop(context);
 
-        //delete button
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Task finished'),
+                  duration: Duration(seconds: 2),
+                ),
+              );
+            },
+          ),
+        IconButton(
+          icon: Icon(
+            Icons.share_outlined,
+            color: Colors.black.withOpacity(0.7),
+          ),
+          onPressed: () {},
+        ),
+        if (task.finished == false)
+          IconButton(
+            icon: Icon(
+              Icons.edit_outlined,
+              color: Colors.black.withOpacity(0.7),
+            ),
+            onPressed: () {
+              updateTask(context: context, task: task);
+            },
+          ),
         IconButton(
           icon: const Icon(
             Icons.delete_outline,
@@ -57,7 +72,7 @@ openDetails(BuildContext context, Task task, List<Check> checks) {
                     ),
                     TextButton(
                       onPressed: () {
-                        DataService.deleteTask(task);
+                        TaskService.deleteTask(task);
                         Navigator.pop(context);
                         Navigator.pop(context);
                       },
