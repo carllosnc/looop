@@ -111,7 +111,7 @@ class _FormUpdateTaskState extends State<FormUpdateTask> {
                       color: Colors.black,
                       onTap: () async {
                         if (formKey.currentState!.validate()) {
-                          await DataService.updateTask(
+                          await TaskService.updateTask(
                             task: widget.task,
                             title: titleController.text,
                             hour: rememberHour,
