@@ -45,7 +45,7 @@ class _ProgressBoardState extends State<ProgressBoard> {
             gap: 20,
             children: [
               StreamFirestoreDocBuilder(
-                stream: DataService.getTask(widget.task),
+                stream: TaskService.getTask(widget.task),
                 success: (context, snapshot) {
                   Task task = Task.fromJson(snapshot.data!.data()!);
 
@@ -67,7 +67,7 @@ class _ProgressBoardState extends State<ProgressBoard> {
                             Text(
                               task.title.inCaps,
                               style: const TextStyle(
-                                fontSize: 18,
+                                fontSize: 16,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
                               ),
@@ -89,10 +89,14 @@ class _ProgressBoardState extends State<ProgressBoard> {
                 loading: const SizedBox(),
               ),
               StreamFirestoreQueryBuilder(
-                stream: DataService.getChecks(widget.task),
+                stream: CheckService.getChecks(widget.task),
                 success: (context, snapshot) {
                   List<Check> checks = snapshot.data!.docs.map((e) => Check.fromJson(e.data())).toList();
                   checks.sort((a, b) => a.checkedAt.compareTo(b.checkedAt));
+
+                  DateTime firstCheck = checks.first.checkedAt;
+                  DateTime lastCheck = checks.last.checkedAt;
+                  int totalDays = lastCheck.difference(firstCheck).inDays + 1;
 
                   return VWColumn(
                     gap: 20,
@@ -129,9 +133,9 @@ class _ProgressBoardState extends State<ProgressBoard> {
                         },
                       ),
                       Text(
-                        '${checks.length} checks',
+                        '${checks.length} ${"check".pluralize(checks.length)} in $totalDays ${"day".pluralize(totalDays)}',
                         style: const TextStyle(
-                          fontSize: 14,
+                          fontSize: 13,
                           color: Colors.white,
                         ),
                       )
