@@ -40,7 +40,6 @@ appTheme({required bool isLight}) => ThemeData(
           ),
         ),
       ),
-      //bottom sheet background white
       bottomSheetTheme: BottomSheetThemeData(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -62,5 +61,11 @@ appTheme({required bool isLight}) => ThemeData(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
+      ),
+      pageTransitionsTheme: const PageTransitionsTheme(
+        builders: {
+          TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+          TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+        },
       ),
     );
