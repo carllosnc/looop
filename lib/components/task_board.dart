@@ -97,58 +97,60 @@ class _TaskBoardState extends State<TaskBoard> {
                   ],
                 ),
               ),
-              StreamFirestoreQueryBuilder(
-                stream: DataService.getChecks(widget.task),
-                success: (context, snapshot) {
-                  List<Check> checks = snapshot.data!.docs.map((e) => Check.fromJson(e.data())).toList();
-                  bool hasCheck = checks.any((e) => e.checkedAt.toCompare() == today.toCompare());
+              if (widget.task.finished == true)
+                const Icon(
+                  Icons.lock_outline,
+                  color: Colors.white,
+                ),
+              if (widget.task.finished == false)
+                StreamFirestoreQueryBuilder(
+                  stream: CheckService.getChecks(widget.task),
+                  success: (context, snapshot) {
+                    List<Check> checks = snapshot.data!.docs.map((e) => Check.fromJson(e.data())).toList();
+                    bool hasCheck = checks.any((e) => e.checkedAt.toCompare() == today.toCompare());
 
-                  dynamic currentCheck = checks.firstWhereOrNull(
-                    (e) => e.checkedAt.toCompare() == today.toCompare(),
-                  );
-
-                  return CircleAvatar(
-                    backgroundColor: hasCheck ? Colors.green : Colors.white.withOpacity(0.2),
+                    dynamic currentCheck = checks.firstWhereOrNull(
+                      (e) => e.checkedAt.toCompare() == today.toCompare(),
+                    );
+                    return CircleAvatar(
+                      backgroundColor: hasCheck ? Colors.green : Colors.white.withOpacity(0.2),
+                      radius: 25,
+                      child: IconButton(
+                        iconSize: 30,
+                        icon: Icon(
+                          Icons.check,
+                          color: hasCheck ? Colors.white : Colors.white.withOpacity(0.6),
+                        ),
+                        onPressed: () {
+                          if (currentCheck == null) {
+                            CheckService.addCheck(widget.task);
+                          } else {
+                            CheckService.deleteCheck(widget.task, currentCheck);
+                          }
+                        },
+                      ),
+                    );
+                  },
+                  noData: CircleAvatar(
+                    backgroundColor: Colors.white.withOpacity(0.2),
                     radius: 25,
                     child: IconButton(
                       iconSize: 30,
                       icon: Icon(
                         Icons.check,
-                        color: hasCheck ? Colors.white : Colors.white.withOpacity(0.6),
+                        color: Colors.white.withOpacity(0.6),
                       ),
                       onPressed: () {
-                        if (currentCheck == null) {
-                          DataService.addCheck(widget.task);
-                        } else {
-                          DataService.deleteCheck(widget.task, currentCheck);
-                        }
+                        CheckService.addCheck(widget.task);
                       },
                     ),
-                  );
-                },
-                noData: CircleAvatar(
-                  backgroundColor: Colors.white.withOpacity(0.2),
-                  radius: 25,
-                  child: IconButton(
-                    iconSize: 30,
-                    icon: Icon(
-                      Icons.check,
-                      color: Colors.white.withOpacity(0.6),
-                    ),
-                    onPressed: () {
-                      DataService.addCheck(widget.task);
-                    },
                   ),
-                ),
-                loading: const CircularProgressIndicator(
-                  color: Colors.white,
-                  strokeWidth: 2,
-                ),
-              )
+                  loading: const SizedBox(),
+                )
             ],
           ),
           StreamFirestoreQueryBuilder(
-            stream: DataService.getChecks(widget.task),
+            stream: CheckService.getChecks(widget.task),
             success: (context, snapshot) {
               List<Check> checks = snapshot.data!.docs.map((e) => Check.fromJson(e.data())).toList();
               checks.sort((a, b) => a.checkedAt.compareTo(b.checkedAt));
@@ -194,7 +196,7 @@ class _TaskBoardState extends State<TaskBoard> {
           // VWButton(
           //   label: "Test",
           //   onTap: () {
-          //     DataService.addCheckTest(widget.task, count = count + 1);
+          //     CheckService.addCheckTest(widget.task, count = count + 3);
           //   },
           // ),
         ],
