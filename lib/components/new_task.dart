@@ -98,7 +98,7 @@ class _FormNewTaskState extends State<FormNewTask> {
                       color: Colors.black,
                       onTap: () async {
                         if (formKey.currentState!.validate()) {
-                          await DataService.addTask(
+                          await TaskService.addTask(
                             title: titleController.text,
                             hour: timer,
                             icon: emoji,
