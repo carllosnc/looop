@@ -22,4 +22,12 @@ extension StringExtension on String {
   }
 
   String get inCaps => '${this[0].toUpperCase()}${substring(1)}';
+
+  String pluralize(int count) {
+    if (count == 1) {
+      return this;
+    } else {
+      return '${this}s';
+    }
+  }
 }
