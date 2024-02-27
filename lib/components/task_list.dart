@@ -1,19 +1,27 @@
 import 'package:all_day/imports/app.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class TaskList extends StatelessWidget {
+  final Stream<QuerySnapshot<Map<String, dynamic>>> stream;
+  final Widget noTask;
+
   const TaskList({
     super.key,
+    required this.stream,
+    this.noTask = const NoTasks(),
   });
 
   @override
   Widget build(BuildContext context) {
     return StreamFirestoreQueryBuilder(
-      stream: DataService.getTasks(),
+      stream: stream,
       success: (context, snapshot) {
         List<Task> tasks = snapshot.data!.docs.map((e) => Task.fromJson(e.data())).toList().cast<Task>();
         tasks.sort((a, b) => b.createdAt.compareTo(a.createdAt));
         tasks = tasks.reversed.toList();
+
+        print("Here!");
 
         return ListView.separated(
           separatorBuilder: (context, index) => const SizedBox(
@@ -37,7 +45,7 @@ class TaskList extends StatelessWidget {
           },
         );
       },
-      noData: const NoTasks(),
+      noData: noTask,
       loading: const Center(
         child: CircularProgressIndicator(
           color: Colors.black,
