@@ -112,6 +112,7 @@ class _TaskBoardState extends State<TaskBoard> {
                     dynamic currentCheck = checks.firstWhereOrNull(
                       (e) => e.checkedAt.toCompare() == today.toCompare(),
                     );
+
                     return CircleAvatar(
                       backgroundColor: hasCheck ? Colors.green : Colors.white.withOpacity(0.2),
                       radius: 25,
