@@ -18,7 +18,7 @@ class StreamFirestoreQueryBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: stream,
+      stream: stream.distinct(),
       builder: (
         context,
         AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot,
