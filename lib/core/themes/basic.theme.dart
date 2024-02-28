@@ -10,6 +10,7 @@ appTheme({required bool isLight}) => ThemeData(
           borderRadius: BorderRadius.circular(12),
         ),
       ),
+      //remove border from drawer header
       scaffoldBackgroundColor: Colors.white,
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.white,
