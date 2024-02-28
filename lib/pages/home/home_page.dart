@@ -18,45 +18,99 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
     return Scaffold(
       extendBody: true,
-      appBar: AppBar(
-        title: Text(
-          "Hello, ${user!.displayName!.formatName()}",
-        ),
-        actions: [
-          VWRow(
-            gap: 10,
-            padding: const EdgeInsets.only(right: 10),
+      drawer: Drawer(
+        surfaceTintColor: Colors.white,
+        child: Container(
+          clipBehavior: Clip.hardEdge,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(Assets.logoBg),
+              fit: BoxFit.contain,
+              alignment: Alignment.center,
+            ),
+          ),
+          child: VWColumn(
+            verticalAlignment: MainAxisAlignment.spaceBetween,
+            padding: EdgeInsets.zero,
             children: [
-              CircleAvatar(
-                backgroundColor: Colors.black,
-                maxRadius: 20,
-                child: IconButton(
-                  iconSize: 25,
-                  padding: const EdgeInsets.all(0),
-                  icon: const Icon(Icons.save_outlined, color: Colors.white),
-                  onPressed: () {
-                    context.push("/finished");
-                  },
+              SizedBox(
+                width: double.infinity,
+                child: SizedBox(
+                  height: 230,
+                  child: VWColumn(
+                    padding: const EdgeInsets.all(20),
+                    verticalAlignment: MainAxisAlignment.end,
+                    gap: 10,
+                    children: [
+                      CircleAvatar(
+                        backgroundColor: Colors.black,
+                        radius: 30,
+                        backgroundImage: NetworkImage(user!.photoURL!),
+                      ),
+                      VWColumn(
+                        children: [
+                          Text(
+                            user.displayName!,
+                            style: const TextStyle(
+                              fontSize: 20,
+                            ),
+                          ),
+                          Text(
+                            user.email!,
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.grey[600],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              CircleAvatar(
-                backgroundColor: Colors.black,
-                maxRadius: 20,
-                child: IconButton(
-                  iconSize: 25,
-                  padding: const EdgeInsets.all(0),
-                  icon: const Icon(Icons.add, color: Colors.white),
-                  onPressed: () {
-                    openNewTask(context);
-                  },
-                ),
-              )
+              ListTile(
+                title: const Text('Sign Out'),
+                leading: const Icon(Icons.logout, color: Colors.red),
+                onTap: () {
+                  FirebaseAuth.instance.signOut();
+                  context.go("/login");
+                },
+              ),
             ],
+          ),
+        ),
+      ),
+      appBar: AppBar(
+        title: Text(
+          "Hello, ${user.displayName!.formatName()}",
+        ),
+        actions: [
+          IconButton(
+            iconSize: 25,
+            icon: Icon(
+              Icons.inventory_2_outlined,
+              color: Colors.black.withOpacity(0.7),
+            ),
+            onPressed: () {
+              context.push("/finished");
+            },
+          ),
+          IconButton(
+            iconSize: 25,
+            icon: Icon(
+              Icons.add_circle_outline_rounded,
+              color: Colors.black.withOpacity(0.7),
+            ),
+            onPressed: () {
+              openNewTask(context);
+            },
           ),
         ],
       ),
-      body: TaskList(
-        stream: TaskService.getUnfinishedTasks(),
+      body: DelayRender(
+        child: TaskList(
+          stream: TaskService.getUnfinishedTasks(),
+        ),
       ),
     );
   }
