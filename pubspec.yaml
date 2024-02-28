@@ -56,6 +56,7 @@ dependencies:
   validatorless: ^1.2.3
   cloud_firestore: ^4.15.4
   collection: ^1.18.0
+  share_plus: ^7.2.2
 
 dev_dependencies:
   flutter_test:
@@ -89,6 +90,7 @@ flutter:
     - .env
     - ./assets/animations/rocket.json
     - ./assets/images/logo.webp
+    - ./assets/images/logo-bg.webp
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
