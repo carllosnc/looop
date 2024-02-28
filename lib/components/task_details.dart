@@ -1,8 +1,27 @@
+import 'dart:typed_data';
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:vw/vw.dart';
 import '/imports/app.dart';
 
 openDetails(BuildContext context, Task task, List<Check> checks) {
+  final GlobalKey globalKey = GlobalKey();
+
+  Future<Uint8List> captureWidget() async {
+    final RenderRepaintBoundary boundary = globalKey.currentContext?.findRenderObject() as RenderRepaintBoundary;
+
+    final ui.Image image = await boundary.toImage(pixelRatio: 2.0);
+
+    final ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+
+    final Uint8List pngBytes = byteData!.buffer.asUint8List();
+
+    return pngBytes;
+  }
+
   VWPage.open(
     context: context,
     level: 1,
@@ -27,12 +46,21 @@ openDetails(BuildContext context, Task task, List<Check> checks) {
             },
           ),
         IconButton(
-          icon: Icon(
-            Icons.share_outlined,
-            color: Colors.black.withOpacity(0.7),
-          ),
-          onPressed: () {},
-        ),
+            icon: Icon(
+              Icons.share_outlined,
+              color: Colors.black.withOpacity(0.7),
+            ),
+            onPressed: () async {
+              var result = await captureWidget();
+
+              Share.shareXFiles([
+                XFile.fromData(
+                  result,
+                  name: 'progress',
+                  mimeType: 'image/png',
+                )
+              ]);
+            }),
         if (task.finished == false)
           IconButton(
             icon: Icon(
@@ -89,8 +117,11 @@ openDetails(BuildContext context, Task task, List<Check> checks) {
     body: SingleChildScrollView(
       child: DelayRender(
         delay: 300,
-        child: ProgressBoard(
-          task: task,
+        child: RepaintBoundary(
+          key: globalKey,
+          child: ProgressBoard(
+            task: task,
+          ),
         ),
       ),
     ),
