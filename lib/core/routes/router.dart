@@ -28,6 +28,11 @@ final router = GoRouter(
       path: '/home',
       builder: (context, state) => const HomePage(),
     ),
+    //login
+    GoRoute(
+      path: '/login',
+      builder: (context, state) => const LoginPage(),
+    ),
     GoRoute(
       path: '/finished',
       builder: (context, state) => const FinishedPage(),
