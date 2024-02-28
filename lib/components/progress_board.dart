@@ -35,7 +35,7 @@ class _ProgressBoardState extends State<ProgressBoard> {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            Color.fromARGB(255, 43, 43, 43),
+            Colors.black,
             Colors.black,
           ],
         ),
@@ -73,7 +73,7 @@ class _ProgressBoardState extends State<ProgressBoard> {
                               ),
                             ),
                             Text(
-                              task.createdAt.formatDateTime(),
+                              "Started at: ${task.createdAt.formatDateTime()}",
                               style: TextStyle(
                                 fontSize: 14,
                                 color: Colors.white.withOpacity(0.6),
@@ -132,12 +132,17 @@ class _ProgressBoardState extends State<ProgressBoard> {
                           );
                         },
                       ),
-                      Text(
-                        '${checks.length} ${"check".pluralize(checks.length)} in $totalDays ${"day".pluralize(totalDays)}',
-                        style: const TextStyle(
-                          fontSize: 13,
-                          color: Colors.white,
-                        ),
+                      VWRow(
+                        horizontalAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            '${checks.length} ${"check".pluralize(checks.length)} in $totalDays ${"day".pluralize(totalDays)}',
+                            style: const TextStyle(
+                              fontSize: 13,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
                       )
                     ],
                   );
