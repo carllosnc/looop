@@ -21,14 +21,13 @@ class TaskList extends StatelessWidget {
         tasks.sort((a, b) => b.createdAt.compareTo(a.createdAt));
         tasks = tasks.reversed.toList();
 
-        print("Here!");
-
         return ListView.separated(
           separatorBuilder: (context, index) => const SizedBox(
             height: 5,
           ),
           physics: const BouncingScrollPhysics(),
           cacheExtent: 5000,
+          restorationId: 'task-list',
           padding: const EdgeInsets.only(
             top: 0,
             left: 5,
