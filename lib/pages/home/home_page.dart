@@ -33,47 +33,51 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
             verticalAlignment: MainAxisAlignment.spaceBetween,
             padding: EdgeInsets.zero,
             children: [
-              SizedBox(
-                width: double.infinity,
-                child: SizedBox(
-                  height: 230,
-                  child: VWColumn(
-                    padding: const EdgeInsets.all(20),
-                    verticalAlignment: MainAxisAlignment.end,
-                    gap: 10,
-                    children: [
-                      CircleAvatar(
-                        backgroundColor: Colors.black,
-                        radius: 30,
-                        backgroundImage: NetworkImage(user!.photoURL!),
-                      ),
-                      VWColumn(
-                        children: [
-                          Text(
-                            user.displayName!,
-                            style: const TextStyle(
-                              fontSize: 20,
+              if (user != null)
+                SizedBox(
+                  width: double.infinity,
+                  child: SizedBox(
+                    height: 230,
+                    child: VWColumn(
+                      padding: const EdgeInsets.all(20),
+                      verticalAlignment: MainAxisAlignment.end,
+                      gap: 10,
+                      children: [
+                        CircleAvatar(
+                          backgroundColor: Colors.black,
+                          radius: 30,
+                          backgroundImage: NetworkImage(user.photoURL!),
+                        ),
+                        VWColumn(
+                          children: [
+                            Text(
+                              user.displayName!,
+                              style: const TextStyle(
+                                fontSize: 20,
+                              ),
                             ),
-                          ),
-                          Text(
-                            user.email!,
-                            style: TextStyle(
-                              fontSize: 15,
-                              color: Colors.grey[600],
+                            Text(
+                              user.email!,
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.grey[600],
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
               ListTile(
                 title: const Text('Sign Out'),
                 leading: const Icon(Icons.logout, color: Colors.red),
-                onTap: () {
-                  FirebaseAuth.instance.signOut();
-                  context.go("/login");
+                onTap: () async {
+                  await FirebaseAuth.instance.signOut();
+
+                  if (context.mounted) {
+                    context.go("/login");
+                  }
                 },
               ),
             ],
@@ -81,9 +85,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         ),
       ),
       appBar: AppBar(
-        title: Text(
-          "Hello, ${user.displayName!.formatName()}",
-        ),
+        title: user != null ? Text("Hello, ${user.displayName!.formatName()}") : const Text('All Day'),
         actions: [
           IconButton(
             iconSize: 25,
