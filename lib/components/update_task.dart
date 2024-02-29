@@ -64,9 +64,9 @@ class _FormUpdateTaskState extends State<FormUpdateTask> {
                         fontSize: 20,
                       ),
                       decoration: const InputDecoration(
-                        labelText: "Título da tarefa",
+                        labelText: "Title",
                         floatingLabelAlignment: FloatingLabelAlignment.start,
-                        suffixIcon: Icon(Icons.edit),
+                        suffixIcon: Icon(Icons.edit_outlined),
                       ),
                     ),
                     VWTimePicker(
