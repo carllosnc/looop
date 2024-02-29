@@ -12,13 +12,15 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixin {
-  continueWithGoogle() async {
+  continueWithGoogle(BuildContext context) async {
     final result = await AuthService.signInWithGoogle();
 
-    if (context.mounted) {
-      if (result == 'Welcome!') {
+    if (result == 'Welcome!') {
+      if (context.mounted) {
         context.go('/home');
-      } else {
+      }
+    } else {
+      if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(result),
@@ -55,10 +57,10 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
             SizedBox(
               width: 250,
               child: Text(
-                'Monitore e registre suas atividades diárias de forma simples e rápida.',
+                'Tiny Steps, Big Wins: Your Habits, Your Way!',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 18,
                   color: Colors.black.withOpacity(0.7),
                 ),
               ),
@@ -73,9 +75,9 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
           VWButton(
             color: Colors.black,
             leftIcon: FontAwesomeIcons.google,
-            label: "Entrar com Google",
+            label: "Sign in with Google",
             onTap: () {
-              continueWithGoogle();
+              continueWithGoogle(context);
             },
           )
         ],
