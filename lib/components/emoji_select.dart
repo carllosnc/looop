@@ -42,7 +42,7 @@ class _EmojiSelectState extends State<EmojiSelect> {
       decoration: const InputDecoration(
         labelText: "Icon",
         floatingLabelAlignment: FloatingLabelAlignment.start,
-        suffixIcon: Icon(Icons.emoji_emotions),
+        suffixIcon: Icon(Icons.emoji_emotions_outlined),
       ),
       onTap: () {
         showModalBottomSheet(
