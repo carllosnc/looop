@@ -8,7 +8,7 @@ openNewTask(BuildContext context) {
     context: context,
     borderRadius: 20,
     appBar: AppBar(
-      title: const Text('Nova tarefa'),
+      title: const Text('New task'),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(20),
@@ -54,9 +54,9 @@ class _FormNewTaskState extends State<FormNewTask> {
                         fontSize: 20,
                       ),
                       decoration: const InputDecoration(
-                        labelText: "Título da tarefa",
+                        labelText: "Title",
                         floatingLabelAlignment: FloatingLabelAlignment.start,
-                        suffixIcon: Icon(Icons.edit),
+                        suffixIcon: Icon(Icons.edit_outlined),
                       ),
                     ),
                     VWTimePicker(
@@ -69,7 +69,7 @@ class _FormNewTaskState extends State<FormNewTask> {
                       ),
                       validator: Validatorless.required("Required field"),
                       decoration: const InputDecoration(
-                        labelText: "Horário",
+                        labelText: "Time",
                         floatingLabelAlignment: FloatingLabelAlignment.start,
                         suffixIcon: Icon(Icons.access_time),
                       ),
@@ -109,7 +109,7 @@ class _FormNewTaskState extends State<FormNewTask> {
                           }
                         }
                       },
-                      label: "Criar tarefa",
+                      label: "Add task",
                     ),
                   ],
                 ),
