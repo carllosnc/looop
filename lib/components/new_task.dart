@@ -9,12 +9,6 @@ openNewTask(BuildContext context) {
     borderRadius: 20,
     appBar: AppBar(
       title: const Text('New task'),
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
-        ),
-      ),
     ),
     body: const FormNewTask(),
   );
@@ -69,14 +63,19 @@ class _FormNewTaskState extends State<FormNewTask> {
                       ),
                       validator: Validatorless.required("Required field"),
                       decoration: const InputDecoration(
-                        labelText: "Time",
+                        labelText: "Hour",
                         floatingLabelAlignment: FloatingLabelAlignment.start,
                         suffixIcon: Icon(Icons.access_time),
                       ),
                       onChanged: (value) {
                         setState(() {
-                          String minute = value.minute.toString().length == 1 ? "0${value.minute}" : value.minute.toString();
-                          String hour = value.hour.toString().length == 1 ? "0${value.hour}" : value.hour.toString();
+                          String minute = value.minute.toString().length == 1 //
+                              ? "0${value.minute}"
+                              : value.minute.toString();
+
+                          String hour = value.hour.toString().length == 1 //
+                              ? "0${value.hour}"
+                              : value.hour.toString();
 
                           timer = "$hour:$minute";
                         });
