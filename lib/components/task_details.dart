@@ -40,19 +40,28 @@ openDetails(BuildContext context, Task task, List<Check> checks) {
           ),
           content: const Text('Are you sure you want to delete this task?'),
           actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                TaskService.deleteTask(task);
-                Navigator.pop(context);
-                Navigator.pop(context);
-              },
-              child: const Text('Delete'),
+            VWRow(
+              horizontalAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text(
+                    'Cancel',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+                VWButton(
+                  color: Colors.black,
+                  onTap: () {
+                    TaskService.deleteTask(task);
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  },
+                  label: 'Delete',
+                ),
+              ],
             ),
           ],
         );
@@ -81,26 +90,35 @@ openDetails(BuildContext context, Task task, List<Check> checks) {
           ),
           content: Text(description),
           actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                TaskService.finishTask(task, finished);
-                Navigator.pop(context);
-                Navigator.pop(context);
-
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Task finished'),
-                    duration: Duration(seconds: 2),
+            VWRow(
+              horizontalAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text(
+                    'Cancel',
+                    style: TextStyle(color: Colors.black),
                   ),
-                );
-              },
-              child: const Text('Store'),
+                ),
+                VWButton(
+                  color: Colors.black,
+                  onTap: () {
+                    TaskService.finishTask(task, finished);
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Task finished'),
+                        duration: Duration(seconds: 2),
+                      ),
+                    );
+                  },
+                  label: finished ? 'Store' : 'Restore',
+                ),
+              ],
             ),
           ],
         );
