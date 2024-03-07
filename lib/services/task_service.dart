@@ -47,6 +47,8 @@ sealed class TaskService {
     );
 
     return _db //
+        .collection('users')
+        .doc(user!.uid)
         .collection('tasks')
         .doc(task.id)
         .update(updatedTask.toJson());
