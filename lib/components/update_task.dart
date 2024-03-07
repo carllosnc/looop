@@ -89,8 +89,13 @@ class _FormUpdateTaskState extends State<FormUpdateTask> {
                       ),
                       onChanged: (value) {
                         setState(() {
-                          String minute = value.minute.toString().length == 1 ? "0${value.minute}" : value.minute.toString();
-                          String hour = value.hour.toString().length == 1 ? "0${value.hour}" : value.hour.toString();
+                          String minute = value.minute.toString().length == 1 //
+                              ? "0${value.minute}"
+                              : value.minute.toString();
+
+                          String hour = value.hour.toString().length == 1 //
+                              ? "0${value.hour}"
+                              : value.hour.toString();
 
                           rememberHour = "$hour:$minute";
                         });
