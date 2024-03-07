@@ -9,7 +9,7 @@ class FinishedPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Finised Tasks'),
+        title: const Text('Finished Tasks'),
       ),
       body: TaskList(
         stream: TaskService.getFinishedTasks(),
