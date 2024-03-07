@@ -49,6 +49,16 @@ appTheme({required bool isLight}) => ThemeData(
           borderRadius: BorderRadius.circular(20),
         ),
       ),
+      textButtonTheme: TextButtonThemeData(
+        style: ButtonStyle(
+          textStyle: MaterialStateProperty.all(
+            const TextStyle(
+              color: Colors.black,
+              fontSize: 16,
+            ),
+          ),
+        ),
+      ),
       timePickerTheme: TimePickerThemeData(
         backgroundColor: Colors.white,
         dayPeriodTextColor: Colors.black,
