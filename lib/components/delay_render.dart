@@ -31,6 +31,8 @@ class _DelayRenderState extends State<DelayRender> {
 
   @override
   Widget build(BuildContext context) {
-    return canRender ? widget.child : widget.loading ?? const SizedBox();
+    return canRender //
+        ? widget.child
+        : widget.loading ?? const SizedBox();
   }
 }
