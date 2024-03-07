@@ -14,7 +14,9 @@ sealed class AuthService {
         idToken: googleAuth?.idToken,
       );
 
-      await FirebaseAuth.instance.signInWithCredential(credential);
+      await FirebaseAuth //
+          .instance
+          .signInWithCredential(credential);
 
       return 'Welcome!';
     } catch (e) {
