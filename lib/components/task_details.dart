@@ -11,7 +11,9 @@ openDetails(BuildContext context, Task task, List<Check> checks) {
   final GlobalKey globalKey = GlobalKey();
 
   Future<Uint8List> captureWidget() async {
-    final RenderRepaintBoundary boundary = globalKey.currentContext?.findRenderObject() as RenderRepaintBoundary;
+    final RenderRepaintBoundary boundary = globalKey //
+        .currentContext
+        ?.findRenderObject() as RenderRepaintBoundary;
 
     final ui.Image image = await boundary.toImage(pixelRatio: 2.0);
 
@@ -22,11 +24,111 @@ openDetails(BuildContext context, Task task, List<Check> checks) {
     return pngBytes;
   }
 
+  Future<dynamic> deleteTask(BuildContext context, Task task) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          surfaceTintColor: Colors.white,
+          title: const Text(
+            'Delete Task',
+            style: TextStyle(
+              fontSize: 25,
+              color: Colors.red,
+            ),
+          ),
+          content: const Text('Are you sure you want to delete this task?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                TaskService.deleteTask(task);
+                Navigator.pop(context);
+                Navigator.pop(context);
+              },
+              child: const Text('Delete'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<dynamic> storeTask({
+    required BuildContext context,
+    required Task task,
+    required String title,
+    required String description,
+    required bool finished,
+  }) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          surfaceTintColor: Colors.white,
+          title: Text(
+            title,
+            style: const TextStyle(
+              fontSize: 25,
+            ),
+          ),
+          content: Text(description),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                TaskService.finishTask(task, finished);
+                Navigator.pop(context);
+                Navigator.pop(context);
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Task finished'),
+                    duration: Duration(seconds: 2),
+                  ),
+                );
+              },
+              child: const Text('Store'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   VWPage.open(
     context: context,
     level: 1,
     appBar: AppBar(
       actions: [
+        if (task.finished == true)
+          IconButton(
+            icon: Icon(
+              Icons.refresh,
+              color: Colors.black.withOpacity(0.7),
+            ),
+            onPressed: () async {
+              storeTask(
+                context: context,
+                task: task,
+                title: 'Restore Task',
+                description: 'Are you sure you want to restore this task?',
+                finished: false,
+              );
+            },
+          ),
         if (task.finished == false)
           IconButton(
             icon: Icon(
@@ -34,14 +136,12 @@ openDetails(BuildContext context, Task task, List<Check> checks) {
               color: Colors.black.withOpacity(0.7),
             ),
             onPressed: () async {
-              TaskService.finishTask(task);
-              Navigator.pop(context);
-
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Task finished'),
-                  duration: Duration(seconds: 2),
-                ),
+              storeTask(
+                context: context,
+                task: task,
+                title: 'Store Task',
+                description: 'Are you sure you want to store this task?',
+                finished: true,
               );
             },
           ),
@@ -77,39 +177,7 @@ openDetails(BuildContext context, Task task, List<Check> checks) {
             color: Colors.red,
           ),
           onPressed: () {
-            showDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  backgroundColor: Colors.white,
-                  surfaceTintColor: Colors.white,
-                  title: const Text(
-                    'Delete Task',
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.red,
-                    ),
-                  ),
-                  content: const Text('Are you sure you want to delete this task?'),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text('Cancel'),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        TaskService.deleteTask(task);
-                        Navigator.pop(context);
-                        Navigator.pop(context);
-                      },
-                      child: const Text('Delete'),
-                    ),
-                  ],
-                );
-              },
-            );
+            deleteTask(context, task);
           },
         ),
       ],
