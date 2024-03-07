@@ -85,7 +85,9 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         ),
       ),
       appBar: AppBar(
-        title: user != null ? Text("Hello, ${user.displayName!.formatName()}") : const Text('All Day'),
+        title: const Text(
+          "All Day",
+        ),
         actions: [
           IconButton(
             iconSize: 25,
