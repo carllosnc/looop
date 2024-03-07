@@ -72,7 +72,9 @@ class _EmojiSelectState extends State<EmojiSelect> {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       border: Border.all(
-                        color: isSelected == index ? Colors.black : Colors.transparent,
+                        color: isSelected == index //
+                            ? Colors.black
+                            : Colors.transparent,
                         width: 2,
                       ),
                       borderRadius: BorderRadius.circular(10),
