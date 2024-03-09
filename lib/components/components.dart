@@ -8,3 +8,4 @@ export './stream_firestore_builder.dart';
 export './delay_render.dart';
 export './update_task.dart';
 export './progress_board.dart';
+export './custom_dialog.dart';
