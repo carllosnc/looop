@@ -22,16 +22,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         surfaceTintColor: Colors.white,
         child: Container(
           clipBehavior: Clip.hardEdge,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(Assets.logoBg),
-              fit: BoxFit.contain,
-              alignment: Alignment.center,
-            ),
-          ),
+          decoration: const BoxDecoration(),
           child: VWColumn(
-            verticalAlignment: MainAxisAlignment.spaceBetween,
-            padding: EdgeInsets.zero,
             children: [
               if (user != null)
                 SizedBox(
@@ -72,12 +64,42 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
               ListTile(
                 title: const Text('Sign Out'),
                 leading: const Icon(Icons.logout, color: Colors.red),
-                onTap: () async {
-                  await FirebaseAuth.instance.signOut();
+                onTap: () {
+                  openCustomDialog(
+                    context: context,
+                    title: "Sign Out",
+                    description: "Are you sure you want to sign out?",
+                    cancelLabel: "Cancel",
+                    confirmLabel: "Sign Out",
+                    onConfirm: () async {
+                      await FirebaseAuth.instance.signOut();
 
-                  if (context.mounted) {
-                    context.go("/login");
-                  }
+                      if (context.mounted) {
+                        context.go("/login");
+                      }
+                    },
+                  );
+                },
+              ),
+              const Spacer(),
+              ListTile(
+                title: const Text('Delete account'),
+                leading: const Icon(Icons.delete_forever_outlined, color: Colors.red),
+                onTap: () {
+                  openCustomDialog(
+                    context: context,
+                    title: "Delete Account",
+                    description: "Are you sure you want to delete your account?",
+                    cancelLabel: "Cancel",
+                    confirmLabel: "Delete",
+                    onConfirm: () async {
+                      await AuthService.deleteAccount();
+
+                      if (context.mounted) {
+                        context.go("/login");
+                      }
+                    },
+                  );
                 },
               ),
             ],
