@@ -24,108 +24,6 @@ openDetails(BuildContext context, Task task, List<Check> checks) {
     return pngBytes;
   }
 
-  Future<dynamic> deleteTask(BuildContext context, Task task) {
-    return showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          backgroundColor: Colors.white,
-          surfaceTintColor: Colors.white,
-          title: const Text(
-            'Delete Task',
-            style: TextStyle(
-              fontSize: 25,
-              color: Colors.red,
-            ),
-          ),
-          content: const Text('Are you sure you want to delete this task?'),
-          actions: [
-            VWRow(
-              horizontalAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Text(
-                    'Cancel',
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-                VWButton(
-                  color: Colors.black,
-                  onTap: () {
-                    TaskService.deleteTask(task);
-                    Navigator.pop(context);
-                    Navigator.pop(context);
-                  },
-                  label: 'Delete',
-                ),
-              ],
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Future<dynamic> storeTask({
-    required BuildContext context,
-    required Task task,
-    required String title,
-    required String description,
-    required bool finished,
-  }) {
-    return showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          backgroundColor: Colors.white,
-          surfaceTintColor: Colors.white,
-          title: Text(
-            title,
-            style: const TextStyle(
-              fontSize: 25,
-            ),
-          ),
-          content: Text(description),
-          actions: [
-            VWRow(
-              horizontalAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Text(
-                    'Cancel',
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-                VWButton(
-                  color: Colors.black,
-                  onTap: () {
-                    TaskService.finishTask(task, finished);
-                    Navigator.pop(context);
-                    Navigator.pop(context);
-
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Task finished'),
-                        duration: Duration(seconds: 2),
-                      ),
-                    );
-                  },
-                  label: finished ? 'Store' : 'Restore',
-                ),
-              ],
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   VWPage.open(
     context: context,
     level: 1,
@@ -138,12 +36,24 @@ openDetails(BuildContext context, Task task, List<Check> checks) {
               color: Colors.black.withOpacity(0.7),
             ),
             onPressed: () async {
-              storeTask(
+              openCustomDialog(
                 context: context,
-                task: task,
                 title: 'Restore Task',
+                cancelLabel: 'Cancel',
+                confirmLabel: 'Restore',
                 description: 'Are you sure you want to restore this task?',
-                finished: false,
+                onConfirm: () {
+                  TaskService.finishTask(task, false);
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Task restored'),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                },
               );
             },
           ),
@@ -154,12 +64,24 @@ openDetails(BuildContext context, Task task, List<Check> checks) {
               color: Colors.black.withOpacity(0.7),
             ),
             onPressed: () async {
-              storeTask(
+              openCustomDialog(
                 context: context,
-                task: task,
                 title: 'Store Task',
+                cancelLabel: 'Cancel',
+                confirmLabel: 'Store',
                 description: 'Are you sure you want to store this task?',
-                finished: true,
+                onConfirm: () {
+                  TaskService.finishTask(task, true);
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Task stored'),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                },
               );
             },
           ),
@@ -195,7 +117,18 @@ openDetails(BuildContext context, Task task, List<Check> checks) {
             color: Colors.red,
           ),
           onPressed: () {
-            deleteTask(context, task);
+            openCustomDialog(
+              context: context,
+              title: 'Delete Task',
+              cancelLabel: 'Cancel',
+              confirmLabel: 'Delete',
+              description: 'Are you sure you want to delete this task?',
+              onConfirm: () {
+                TaskService.deleteTask(task);
+                Navigator.pop(context);
+                Navigator.pop(context);
+              },
+            );
           },
         ),
       ],
