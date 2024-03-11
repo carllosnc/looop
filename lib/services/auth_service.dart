@@ -26,7 +26,36 @@ sealed class AuthService {
     }
   }
 
-  //delete account
+  static Future<String> signInWithEmailAndPassword(String email, String password) async {
+    try {
+      await FirebaseAuth.instance //
+          .signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      return 'Welcome!';
+    } catch (e) {
+      debugPrint(e.toString());
+      return e.toString();
+    }
+  }
+
+  static Future<String> createAccount(String email, String password) async {
+    try {
+      await FirebaseAuth.instance //
+          .createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      return 'Account created';
+    } catch (e) {
+      debugPrint(e.toString());
+      return e.toString();
+    }
+  }
+
   static Future<String> deleteAccount() async {
     try {
       final user = FirebaseAuth.instance.currentUser;
