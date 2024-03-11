@@ -9,3 +9,5 @@ export './delay_render.dart';
 export './update_task.dart';
 export './progress_board.dart';
 export './custom_dialog.dart';
+export './new_account.dart';
+export './recover_password.dart';
