@@ -28,6 +28,29 @@ class _FormNewTaskState extends State<FormNewTask> {
   final titleController = TextEditingController();
   String timer = "";
   String emoji = "";
+  bool isLoading = false;
+
+  createTaskAction(BuildContext context) async {
+    setState(() {
+      isLoading = true;
+    });
+
+    if (formKey.currentState!.validate()) {
+      await TaskService.addTask(
+        title: titleController.text,
+        hour: timer,
+        icon: emoji,
+      );
+
+      setState(() {
+        isLoading = false;
+      });
+
+      if (context.mounted) {
+        Navigator.pop(context);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,19 +118,8 @@ class _FormNewTaskState extends State<FormNewTask> {
                     ),
                     VWButton(
                       color: Colors.black,
-                      onTap: () async {
-                        if (formKey.currentState!.validate()) {
-                          await TaskService.addTask(
-                            title: titleController.text,
-                            hour: timer,
-                            icon: emoji,
-                          );
-
-                          if (context.mounted) {
-                            Navigator.pop(context);
-                          }
-                        }
-                      },
+                      isLoading: isLoading,
+                      onTap: isLoading ? null : () => createTaskAction(context),
                       label: "Add task",
                     ),
                   ],
