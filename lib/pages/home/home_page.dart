@@ -38,12 +38,16 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                         CircleAvatar(
                           backgroundColor: Colors.black,
                           radius: 30,
-                          backgroundImage: NetworkImage(user.photoURL!),
+                          backgroundImage: user.photoURL == null //
+                              ? const AssetImage(Assets.avatar) as ImageProvider<Object>?
+                              : NetworkImage(user.photoURL!),
                         ),
                         VWColumn(
                           children: [
                             Text(
-                              user.displayName!,
+                              user.displayName == null ? user.email!.firstNameFromEmail : user.displayName!,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
                                 fontSize: 20,
                               ),
@@ -51,7 +55,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                             Text(
                               user.email!,
                               style: TextStyle(
-                                fontSize: 15,
+                                fontSize: 16,
                                 color: Colors.grey[600],
                               ),
                             ),
@@ -88,7 +92,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                 onTap: () {
                   openCustomDialog(
                     context: context,
-                    title: "Delete Account",
+                    title: "😧 Delete Account",
                     description: "Are you sure you want to delete your account?",
                     cancelLabel: "Cancel",
                     confirmLabel: "Delete",
