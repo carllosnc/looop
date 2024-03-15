@@ -36,6 +36,7 @@ class _FormUpdateTaskState extends State<FormUpdateTask> {
   final titleController = TextEditingController();
   String rememberHour = "";
   String icon = "";
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -43,6 +44,30 @@ class _FormUpdateTaskState extends State<FormUpdateTask> {
     titleController.text = widget.task.title;
     rememberHour = widget.task.hour;
     icon = widget.task.icon;
+  }
+
+  updateTaskAction(BuildContext context) async {
+    if (formKey.currentState!.validate()) {
+      setState(() {
+        isLoading = true;
+      });
+
+      await TaskService.updateTask(
+        task: widget.task,
+        title: titleController.text,
+        hour: rememberHour,
+        icon: icon,
+        lastCheck: widget.task.lastCheck,
+      );
+
+      setState(() {
+        isLoading = false;
+      });
+
+      if (context.mounted) {
+        Navigator.of(context).pop();
+      }
+    }
   }
 
   @override
@@ -113,22 +138,9 @@ class _FormUpdateTaskState extends State<FormUpdateTask> {
                     ),
                     const SizedBox(height: 30),
                     VWButton(
+                      isLoading: isLoading,
                       color: Colors.black,
-                      onTap: () async {
-                        if (formKey.currentState!.validate()) {
-                          await TaskService.updateTask(
-                            task: widget.task,
-                            title: titleController.text,
-                            hour: rememberHour,
-                            icon: icon,
-                            lastCheck: widget.task.lastCheck,
-                          );
-
-                          if (context.mounted) {
-                            Navigator.of(context).pop();
-                          }
-                        }
-                      },
+                      onTap: isLoading ? null : () => updateTaskAction(context),
                       label: "Update Task",
                     ),
                   ],
