@@ -91,6 +91,7 @@ flutter:
     - ./assets/animations/rocket.json
     - ./assets/images/logo.webp
     - ./assets/images/logo-bg.webp
+    - ./assets/images/avatar.webp
     - shorebird.yaml
 
   # An image asset can refer to one or more resolution-specific "variants", see
