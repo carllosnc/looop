@@ -30,4 +30,8 @@ extension StringExtension on String {
       return '${this}s';
     }
   }
+
+  String get firstNameFromEmail {
+    return split('@')[0];
+  }
 }
