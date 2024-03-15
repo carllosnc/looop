@@ -31,11 +31,11 @@ class _FormNewTaskState extends State<FormNewTask> {
   bool isLoading = false;
 
   createTaskAction(BuildContext context) async {
-    setState(() {
-      isLoading = true;
-    });
-
     if (formKey.currentState!.validate()) {
+      setState(() {
+        isLoading = true;
+      });
+
       await TaskService.addTask(
         title: titleController.text,
         hour: timer,
