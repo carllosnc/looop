@@ -30,7 +30,7 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace "cnc.all_day"
-    compileSdkVersion 34
+    compileSdk flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -51,20 +51,13 @@ android {
         applicationId "cnc.all_day"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion flutter.minSdkVersion
+        minSdkVersion 21
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
-        multiDexEnabled true
     }
 
     signingConfigs {
-        debug {
-            storeFile file("/home/cnc/.android/debug.keystore")
-            storePassword "android"
-            keyAlias "androiddebugkey"
-            keyPassword "android"
-        }
         release {
             keyAlias keystoreProperties['keyAlias']
             keyPassword keystoreProperties['keyPassword']
@@ -72,13 +65,12 @@ android {
             storePassword keystoreProperties['storePassword']
         }
     }
-
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
+            // signingConfig signingConfigs.debug
             signingConfig signingConfigs.release
-            //signingConfig signingConfigs.debug
         }
     }
 }
@@ -87,6 +79,4 @@ flutter {
     source '../..'
 }
 
-dependencies {
-    implementation 'com.android.support:multidex:1.0.3'
-}
+dependencies {}
