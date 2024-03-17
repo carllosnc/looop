@@ -12,7 +12,9 @@ Task _$TaskFromJson(Map<String, dynamic> json) => Task(
       hour: json['hour'] as String,
       icon: json['icon'] as String,
       createdAt: DateTime.parse(json['createdAt'] as String),
-      lastCheck: json['lastCheck'] == null ? null : DateTime.parse(json['lastCheck'] as String),
+      lastCheck: json['lastCheck'] == null
+          ? null
+          : DateTime.parse(json['lastCheck'] as String),
       finished: json['finished'] as bool? ?? false,
     );
 
