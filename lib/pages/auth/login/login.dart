@@ -69,7 +69,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                 children: [
                   Image.asset(
                     Assets.logo,
-                    width: 140,
+                    width: 120,
                   ),
                 ],
               ),
