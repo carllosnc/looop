@@ -1,5 +1,5 @@
-import 'package:all_day/core/extensions/datetime.dart';
-import 'package:all_day/imports/app.dart';
+import '/core/extensions/datetime.dart';
+import '/imports/app.dart';
 import 'package:boxy/boxy.dart';
 import 'package:flutter/material.dart';
 import 'package:vw/vw.dart';
