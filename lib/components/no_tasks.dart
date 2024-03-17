@@ -1,4 +1,4 @@
-import 'package:all_day/imports/app.dart';
+import '/imports/app.dart';
 import 'package:flutter/material.dart';
 import 'package:vw/vw.dart';
 
