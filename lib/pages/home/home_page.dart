@@ -112,7 +112,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       ),
       appBar: AppBar(
         title: const Text(
-          "All Day",
+          "Looop",
         ),
         actions: [
           IconButton(
