@@ -47,11 +47,6 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Tiny Steps, Big Wins: Your Habits, Your Way!",
-            style: TextStyle(
-              fontSize: 17,
-              color: Colors.black,
-            )),
         centerTitle: true,
       ),
       body: Center(
@@ -69,21 +64,28 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                 children: [
                   Image.asset(
                     Assets.logo,
-                    width: 120,
+                    width: 100,
                   ),
                 ],
+              ),
+              Text(
+                "Tiny Steps, Big Wins: Your Habits, Your Way!",
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black.withOpacity(0.8),
+                ),
               ),
               Form(
                 key: formKey,
                 child: VWColumn(
-                  gap: 10,
+                  gap: 20,
                   horizontalAlignment: CrossAxisAlignment.center,
                   children: [
-                    TextButton(
+                    FilledButton.tonal(
                       onPressed: () {
                         context.push('/register');
                       },
-                      child: const Text("😎 Create new account"),
+                      child: const Text("Create new account"),
                     ),
                     TextFormField(
                       controller: emailController,
@@ -134,7 +136,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                             }
                           },
                         ),
-                        TextButton(
+                        FilledButton.tonal(
                           onPressed: () {
                             context.push('/forgot-password');
                           },
@@ -154,7 +156,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
         horizontalAlignment: MainAxisAlignment.spaceBetween,
         verticalAlignment: CrossAxisAlignment.center,
         children: [
-          const Text('Or continue with 👉'),
+          const Text('Or continue with:'),
           VWButton(
             color: Colors.black,
             leftIcon: FontAwesomeIcons.google,
