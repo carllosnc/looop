@@ -39,7 +39,7 @@ class _ProgressBoardState extends State<ProgressBoard> {
             Colors.black,
           ],
         ),
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(15),
         child: Builder(builder: (context) {
           return VWColumn(
             gap: 20,
@@ -92,6 +92,7 @@ class _ProgressBoardState extends State<ProgressBoard> {
                 stream: CheckService.getChecks(widget.task),
                 success: (context, snapshot) {
                   List<Check> checks = snapshot.data!.docs.map((e) => Check.fromJson(e.data())).toList();
+
                   checks.sort((a, b) => a.checkedAt.compareTo(b.checkedAt));
 
                   DateTime firstCheck = checks.first.checkedAt;
@@ -132,26 +133,27 @@ class _ProgressBoardState extends State<ProgressBoard> {
                           );
                         },
                       ),
-                      VWRow(
-                        horizontalAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(
-                            '${checks.length} ${"check".pluralize(checks.length)} in $totalDays ${"day".pluralize(totalDays)}',
-                            style: const TextStyle(
-                              fontSize: 13,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
+                      Text(
+                        '${checks.length} ${"check".pluralize(checks.length)} in $totalDays ${"day".pluralize(totalDays)}',
+                        style: const TextStyle(
+                          fontSize: 13,
+                          color: Colors.white,
+                        ),
                       )
                     ],
                   );
                 },
-                noData: const Text(
-                  'No checks yet',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
+                noData: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 5,
+                  ),
+                  child: Text(
+                    'No checks yet',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.white.withOpacity(0.6),
+                    ),
                   ),
                 ),
                 loading: const SizedBox(),
