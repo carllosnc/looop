@@ -50,7 +50,7 @@ class _TaskBoardState extends State<TaskBoard> {
     return Boxy(
       width: double.infinity,
       padding: const EdgeInsets.all(20),
-      borderRadius: BorderRadius.circular(25),
+      borderRadius: BorderRadius.circular(15),
       gradient: const LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
@@ -156,39 +156,56 @@ class _TaskBoardState extends State<TaskBoard> {
               List<Check> checks = snapshot.data!.docs.map((e) => Check.fromJson(e.data())).toList();
               checks.sort((a, b) => a.checkedAt.compareTo(b.checkedAt));
 
-              return Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: GridView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  cacheExtent: 5000,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 5,
-                    crossAxisSpacing: 5,
-                    mainAxisSpacing: 5,
-                    childAspectRatio: 3.3,
-                  ),
-                  itemCount: checks.length,
-                  itemBuilder: (context, index) {
-                    Check check = checks[index];
+              checks = checks.reversed.toList();
 
-                    return Boxy(
-                      color: getBgColor(check.checkedAt, today),
-                      borderRadius: BorderRadius.circular(100),
-                      child: Center(
-                        child: Text(
-                          textAlign: TextAlign.center,
-                          check.checkedAt.formatToBadge(),
-                          style: TextStyle(
-                            fontSize: 10.5,
-                            fontWeight: FontWeight.bold,
-                            color: getFontColor(check.checkedAt, today),
+              return VWColumn(
+                padding: const EdgeInsets.only(top: 20),
+                gap: 20,
+                children: [
+                  GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    cacheExtent: 5000,
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 5,
+                      crossAxisSpacing: 5,
+                      mainAxisSpacing: 5,
+                      childAspectRatio: 3.3,
+                    ),
+                    itemCount: checks.length > 20 ? 20 : checks.length,
+                    itemBuilder: (context, index) {
+                      Check check = checks[index];
+
+                      return Boxy(
+                        color: getBgColor(check.checkedAt, today),
+                        borderRadius: BorderRadius.circular(100),
+                        child: Center(
+                          child: Text(
+                            textAlign: TextAlign.center,
+                            check.checkedAt.formatToBadge(),
+                            style: TextStyle(
+                              fontSize: 10.5,
+                              fontWeight: FontWeight.bold,
+                              color: getFontColor(check.checkedAt, today),
+                            ),
                           ),
                         ),
+                      );
+                    },
+                  ),
+                  if (checks.length > 20)
+                    SizedBox(
+                      width: double.infinity,
+                      child: Text(
+                        "Total: ${checks.length} checks",
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: Colors.white,
+                        ),
                       ),
-                    );
-                  },
-                ),
+                    ),
+                ],
               );
             },
             noData: const SizedBox(),
