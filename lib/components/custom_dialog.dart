@@ -19,8 +19,9 @@ openCustomDialog({
         actions: [
           VWRow(
             horizontalAlignment: MainAxisAlignment.spaceBetween,
+            verticalAlignment: CrossAxisAlignment.center,
             children: [
-              TextButton(
+              FilledButton.tonal(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
