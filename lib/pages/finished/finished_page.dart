@@ -20,7 +20,7 @@ class FinishedPage extends StatelessWidget {
             gap: 20,
             children: [
               Text(
-                '🥱',
+                '😐',
                 style: TextStyle(
                   fontSize: 100,
                   fontWeight: FontWeight.bold,
