@@ -41,7 +41,7 @@ class AppDrawer extends StatelessWidget {
                       VWColumn(
                         children: [
                           Text(
-                            user!.displayName == null ? user!.email!.firstNameFromEmail : user!.displayName!,
+                            (user!.displayName == null || user!.displayName!.isEmpty) ? user!.email!.firstNameFromEmail : user!.displayName!,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
