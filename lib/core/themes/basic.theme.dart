@@ -3,14 +3,20 @@ import 'package:flutter/material.dart';
 appTheme({required bool isLight}) => ThemeData(
       useMaterial3: true,
       brightness: isLight ? Brightness.light : Brightness.dark,
-      colorSchemeSeed: Colors.grey,
+      colorSchemeSeed: const Color.fromARGB(255, 30, 0, 255),
       fontFamily: 'SFProDisplay',
       dialogTheme: DialogTheme(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
       ),
-      //remove border from drawer header
+      drawerTheme: DrawerThemeData(
+        surfaceTintColor: Colors.transparent,
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(0),
+        ),
+      ),
       scaffoldBackgroundColor: Colors.white,
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.white,
@@ -21,6 +27,7 @@ appTheme({required bool isLight}) => ThemeData(
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
         suffixIconColor: Colors.grey,
         floatingLabelStyle: TextStyle(
           color: Colors.blue[800],
@@ -51,7 +58,7 @@ appTheme({required bool isLight}) => ThemeData(
       ),
       textButtonTheme: TextButtonThemeData(
         style: ButtonStyle(
-          textStyle: MaterialStateProperty.all(
+          textStyle: WidgetStateProperty.all(
             const TextStyle(
               color: Colors.black,
               fontSize: 16,

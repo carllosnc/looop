@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
-import '/imports/app.dart';
+import '/imports.dart';
 
 sealed class CheckService {
   static final FirebaseFirestore _db = FirebaseFirestore.instance;
@@ -71,9 +71,7 @@ sealed class CheckService {
         .doc(user!.uid)
         .collection('tasks')
         .doc(task.id)
-        .update({
-      'lastCheck': checkAsJson['checkedAt'],
-    }).then((value) {
+        .update({'lastCheck': checkAsJson['checkedAt']}).then((value) {
       return _db //
           .collection('users')
           .doc(user!.uid)

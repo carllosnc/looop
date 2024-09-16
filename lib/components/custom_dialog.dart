@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vw/vw.dart';
+import '/imports.dart';
 
 openCustomDialog({
   required BuildContext context,
@@ -14,24 +15,16 @@ openCustomDialog({
     builder: (BuildContext context) {
       return AlertDialog(
         surfaceTintColor: Colors.white,
-        title: Text(title),
-        content: Text(description),
+        title: title.pageTitle,
+        content: description.text,
         actions: [
           VWRow(
             horizontalAlignment: MainAxisAlignment.spaceBetween,
             verticalAlignment: CrossAxisAlignment.center,
             children: [
-              FilledButton.tonal(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text(
-                  cancelLabel,
-                  style: const TextStyle(
-                    color: Colors.black,
-                  ),
-                ),
-              ),
+              cancelLabel.outlinedButton(onPressed: () {
+                Navigator.of(context).pop();
+              }),
               VWButton(
                 color: Colors.black,
                 label: confirmLabel,

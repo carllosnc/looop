@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '/imports/app.dart';
+import '/imports.dart';
 
 final router = GoRouter(
   routes: [
@@ -36,6 +36,10 @@ final router = GoRouter(
     GoRoute(
       path: '/finished',
       builder: (context, state) => const FinishedPage(),
+    ),
+    GoRoute(
+      path: '/settings',
+      builder: (context, state) => const SettingsPage(),
     ),
   ],
 );

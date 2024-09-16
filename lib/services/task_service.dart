@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
-import '/imports/app.dart';
+import '/imports.dart';
 
 sealed class TaskService {
   static final FirebaseFirestore _db = FirebaseFirestore.instance;
