@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:looop/features/home/components/delay_render.dart';
 import 'package:vw/vw_column.dart';
 import '/imports.dart';
 import '../home/components/task_list.dart';
@@ -12,17 +13,19 @@ class FinishedPage extends StatelessWidget {
       appBar: AppBar(
         title: 'Finished Tasks'.pageTitle,
       ),
-      body: TaskList(
-        stream: TaskService.getFinishedTasks(),
-        noTask: Center(
-          child: VWColumn(
-            verticalAlignment: MainAxisAlignment.center,
-            horizontalAlignment: CrossAxisAlignment.center,
-            gap: 20,
-            children: [
-              '😐'.bigEmoji,
-              'No finished tasks'.featuredText,
-            ],
+      body: DelayRender(
+        child: TaskList(
+          stream: TaskService.getFinishedTasks(),
+          noTask: Center(
+            child: VWColumn(
+              verticalAlignment: MainAxisAlignment.center,
+              horizontalAlignment: CrossAxisAlignment.center,
+              gap: 20,
+              children: [
+                '😐'.bigEmoji,
+                'No finished tasks'.featuredText,
+              ],
+            ),
           ),
         ),
       ),

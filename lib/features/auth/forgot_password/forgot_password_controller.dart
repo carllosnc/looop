@@ -19,19 +19,8 @@ mixin ForgotPasswordController<T extends StatefulWidget> on State<T> {
 
       if (context.mounted) {
         if (result == 'Success') {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: const Text('Email sent! Check your inbox'),
-              behavior: SnackBarBehavior.floating,
-              margin: const EdgeInsets.fromLTRB(30, 0, 30, 30),
-              action: SnackBarAction(
-                label: "😧",
-                textColor: Colors.white,
-                onPressed: () {
-                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                },
-              ),
-            ),
+          context.showSnackBar(
+            message: 'Email sent',
           );
 
           setState(() {
@@ -42,19 +31,8 @@ mixin ForgotPasswordController<T extends StatefulWidget> on State<T> {
           return;
         }
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(result!),
-            behavior: SnackBarBehavior.floating,
-            margin: const EdgeInsets.fromLTRB(30, 0, 30, 30),
-            action: SnackBarAction(
-              label: "😧",
-              textColor: Colors.white,
-              onPressed: () {
-                ScaffoldMessenger.of(context).hideCurrentSnackBar();
-              },
-            ),
-          ),
+        context.showSnackBar(
+          message: result!,
         );
       }
 
