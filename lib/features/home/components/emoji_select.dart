@@ -46,12 +46,11 @@ class _EmojiSelectState extends State<EmojiSelect> {
         suffixIcon: Icon(Icons.emoji_emotions_outlined),
       ),
       onTap: () {
-        VWSheet.open(
+        context.openSheet(
           isScrollControlled: false,
           appBar: AppBar(
             title: "Select Emoji".pageTitle,
           ),
-          context: context,
           body: Container(
             color: Colors.grey.shade300,
             child: GridView.builder(

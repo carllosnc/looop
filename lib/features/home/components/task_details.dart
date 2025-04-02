@@ -27,8 +27,7 @@ openDetails(BuildContext context, Task task, List<Check> checks) {
     return pngBytes;
   }
 
-  VWSheet.open(
-    context: context,
+  context.openSheet(
     level: 1,
     appBar: AppBar(
       actions: [
@@ -36,7 +35,7 @@ openDetails(BuildContext context, Task task, List<Check> checks) {
           IconButton(
             icon: Icon(
               Icons.refresh,
-              color: Colors.black.withOpacity(0.7),
+              color: Colors.black.withValues(alpha: 0.7),
             ),
             onPressed: () async {
               openCustomDialog(
@@ -59,7 +58,7 @@ openDetails(BuildContext context, Task task, List<Check> checks) {
           IconButton(
             icon: Icon(
               Icons.save_outlined,
-              color: Colors.black.withOpacity(0.7),
+              color: Colors.black.withValues(alpha: 0.7),
             ),
             onPressed: () async {
               openCustomDialog(
@@ -81,7 +80,7 @@ openDetails(BuildContext context, Task task, List<Check> checks) {
         IconButton(
             icon: Icon(
               Icons.share_outlined,
-              color: Colors.black.withOpacity(0.7),
+              color: Colors.black.withValues(alpha: 0.7),
             ),
             onPressed: () async {
               var result = await captureWidget();
@@ -98,7 +97,7 @@ openDetails(BuildContext context, Task task, List<Check> checks) {
           IconButton(
             icon: Icon(
               Icons.edit_outlined,
-              color: Colors.black.withOpacity(0.7),
+              color: Colors.black.withValues(alpha: 0.7),
             ),
             onPressed: () {
               editTask(context: context, task: task);

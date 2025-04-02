@@ -37,7 +37,7 @@ appTheme({required bool isLight}) => ThemeData(
         ),
         enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(
-            color: Colors.black.withOpacity(0.3),
+            color: Colors.black.withValues(alpha: 0.3),
             width: 1,
           ),
         ),
@@ -74,8 +74,8 @@ appTheme({required bool isLight}) => ThemeData(
           color: Colors.black,
           fontSize: 16,
         ),
-        hourMinuteColor: Colors.black.withOpacity(0.1),
-        dayPeriodColor: Colors.black.withOpacity(0.1),
+        hourMinuteColor: Colors.black.withValues(alpha: 0.1),
+        dayPeriodColor: Colors.black.withValues(alpha: 0.1),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),

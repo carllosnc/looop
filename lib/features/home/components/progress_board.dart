@@ -65,9 +65,7 @@ class _ProgressBoardState extends State<ProgressBoard> {
                         child: VWColumn(
                           children: [
                             task.title.inCaps.text.bold.color(Colors.white),
-                            "Started at: ${task.createdAt.formatDateTime()}"
-                                .text
-                                .color(Colors.white.withOpacity(0.6)),
+                            "Started at: ${task.createdAt.formatDateTime()}".text.color(Colors.white.withValues(alpha: 0.6)),
                           ],
                         ),
                       ),
@@ -80,9 +78,7 @@ class _ProgressBoardState extends State<ProgressBoard> {
               StreamFirestoreQueryBuilder(
                 stream: CheckService.getChecks(widget.task),
                 success: (context, snapshot) {
-                  List<Check> checks = snapshot.data!.docs
-                      .map((e) => Check.fromJson(e.data()))
-                      .toList();
+                  List<Check> checks = snapshot.data!.docs.map((e) => Check.fromJson(e.data())).toList();
 
                   checks.sort((a, b) => a.checkedAt.compareTo(b.checkedAt));
 
@@ -97,8 +93,7 @@ class _ProgressBoardState extends State<ProgressBoard> {
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         cacheExtent: 5000,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 5,
                           crossAxisSpacing: 5,
                           mainAxisSpacing: 5,
@@ -112,20 +107,12 @@ class _ProgressBoardState extends State<ProgressBoard> {
                             color: Colors.green[700],
                             borderRadius: BorderRadius.circular(100),
                             child: Center(
-                              child: check.checkedAt
-                                  .formatToBadge()
-                                  .text
-                                  .bold
-                                  .color(Colors.white)
-                                  .fontSize(10.5),
+                              child: check.checkedAt.formatToBadge().text.bold.color(Colors.white).fontSize(10.5),
                             ),
                           );
                         },
                       ),
-                      '${checks.length} ${"check".pluralize(checks.length)} in $totalDays ${"day".pluralize(totalDays)}'
-                          .text
-                          .color(Colors.white)
-                          .fontSize(13),
+                      '${checks.length} ${"check".pluralize(checks.length)} in $totalDays ${"day".pluralize(totalDays)}'.text.color(Colors.white).fontSize(13),
                     ],
                   );
                 },
@@ -133,8 +120,7 @@ class _ProgressBoardState extends State<ProgressBoard> {
                   padding: const EdgeInsets.symmetric(
                     horizontal: 5,
                   ),
-                  child:
-                      "No checks yet".text.color(Colors.white.withOpacity(0.6)),
+                  child: "No checks yet".text.color(Colors.white.withValues(alpha: 0.6)),
                 ),
                 loading: const SizedBox(),
               ),

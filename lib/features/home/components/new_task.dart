@@ -5,8 +5,7 @@ import '/imports.dart';
 import 'emoji_select.dart';
 
 openNewTask(BuildContext context) {
-  VWSheet.open(
-    context: context,
+  context.openSheet(
     appBar: AppBar(
       title: 'New task'.pageTitle,
     ),
@@ -80,8 +79,7 @@ class _FormNewTaskState extends State<FormNewTask> {
                       ),
                       VWTimePicker(
                         builder: (context, child) => MediaQuery(
-                          data: MediaQuery.of(context)
-                              .copyWith(alwaysUse24HourFormat: true),
+                          data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
                           child: child!,
                         ),
                         style: const TextStyle(
@@ -95,10 +93,9 @@ class _FormNewTaskState extends State<FormNewTask> {
                         ),
                         onChanged: (value) {
                           setState(() {
-                            String minute =
-                                value.minute.toString().length == 1 //
-                                    ? "0${value.minute}"
-                                    : value.minute.toString();
+                            String minute = value.minute.toString().length == 1 //
+                                ? "0${value.minute}"
+                                : value.minute.toString();
 
                             String hour = value.hour.toString().length == 1 //
                                 ? "0${value.hour}"
@@ -123,8 +120,7 @@ class _FormNewTaskState extends State<FormNewTask> {
                       VWButton(
                         color: Colors.black,
                         isLoading: isLoading,
-                        onTap:
-                            isLoading ? null : () => createTaskAction(context),
+                        onTap: isLoading ? null : () => createTaskAction(context),
                         label: "Add task",
                       ),
                     ],

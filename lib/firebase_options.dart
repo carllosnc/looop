@@ -57,7 +57,7 @@ class DefaultFirebaseOptions {
   //   appId: '1:370804609161:android:f4f92cd25ab2ab6e303658',
   //   messagingSenderId: '370804609161',
   //   projectId: 'cnc-all-day',
-  //   storageBucket: 'cnc-all-day.appspot.com',
+  //   storageBucket: 'cnc-all-day.firebasestorage.app',
   // );
 
   static FirebaseOptions android = FirebaseOptions(

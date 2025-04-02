@@ -11,8 +11,7 @@ class VerifyEmailPage extends StatefulWidget {
   State<VerifyEmailPage> createState() => _VerifyEmailPageState();
 }
 
-class _VerifyEmailPageState extends State<VerifyEmailPage>
-    with VerifyEmailController {
+class _VerifyEmailPageState extends State<VerifyEmailPage> with VerifyEmailController {
   @override
   Widget build(BuildContext context) {
     checkEmail(context);
@@ -51,13 +50,9 @@ class _VerifyEmailPageState extends State<VerifyEmailPage>
                 size: 70,
               ),
               "Verify your email address".text.bold,
-              "We send a link to (${FirebaseAuth.instance.currentUser?.email}) address to you confirm the verification."
-                  .text
-                  .textCenter,
+              "We send a link to (${FirebaseAuth.instance.currentUser?.email}) address to you confirm the verification.".text.textCenter,
               const Divider(),
-              'You can resend email if you don\'t received or the link was expired'
-                  .text
-                  .textCenter,
+              'You can resend email if you don\'t received or the link was expired'.text.textCenter,
               const SizedBox(height: 20),
               if (!(emailSended == 'yes'))
                 VWButton(
@@ -70,7 +65,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage>
                 ),
               if (emailSended == 'yes')
                 VWButton(
-                  color: Colors.black.withOpacity(0.15),
+                  color: Colors.black.withValues(alpha: 0.15),
                   labelStyle: const TextStyle(color: Colors.black),
                   onTap: null,
                   label: 'Resend email: $counter',

@@ -8,12 +8,11 @@ editTask({
   required BuildContext context,
   required Task task,
 }) {
-  VWSheet.open(
+  context.openSheet(
     level: 2,
     appBar: AppBar(
       title: "Edit Task".pageTitle,
     ),
-    context: context,
     body: FormUpdateTask(
       task: task,
     ),
@@ -99,8 +98,7 @@ class _FormUpdateTaskState extends State<FormUpdateTask> {
                       ),
                       VWTimePicker(
                         builder: (context, child) => MediaQuery(
-                          data: MediaQuery.of(context)
-                              .copyWith(alwaysUse24HourFormat: true),
+                          data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
                           child: child!,
                         ),
                         style: const TextStyle(
@@ -118,10 +116,9 @@ class _FormUpdateTaskState extends State<FormUpdateTask> {
                         ),
                         onChanged: (value) {
                           setState(() {
-                            String minute =
-                                value.minute.toString().length == 1 //
-                                    ? "0${value.minute}"
-                                    : value.minute.toString();
+                            String minute = value.minute.toString().length == 1 //
+                                ? "0${value.minute}"
+                                : value.minute.toString();
 
                             String hour = value.hour.toString().length == 1 //
                                 ? "0${value.hour}"
@@ -145,8 +142,7 @@ class _FormUpdateTaskState extends State<FormUpdateTask> {
                       VWButton(
                         isLoading: isLoading,
                         color: Colors.black,
-                        onTap:
-                            isLoading ? null : () => updateTaskAction(context),
+                        onTap: isLoading ? null : () => updateTaskAction(context),
                         label: "Update Task",
                       ),
                     ],

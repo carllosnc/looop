@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         leading: IconButton(
           icon: Icon(
             Icons.settings_outlined,
-            color: Colors.black.withOpacity(0.7),
+            color: Colors.black.withValues(alpha: 0.7),
           ),
           onPressed: () {
             context.push("/settings");
@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
             iconSize: 25,
             icon: Icon(
               Icons.inventory_2_outlined,
-              color: Colors.black.withOpacity(0.7),
+              color: Colors.black.withValues(alpha: 0.7),
             ),
             onPressed: () {
               context.push("/finished");
@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
             iconSize: 25,
             icon: Icon(
               Icons.add_circle_outline_rounded,
-              color: Colors.black.withOpacity(0.7),
+              color: Colors.black.withValues(alpha: 0.7),
             ),
             onPressed: () {
               openNewTask(context);

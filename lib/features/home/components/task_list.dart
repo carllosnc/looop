@@ -44,6 +44,14 @@ class TaskList extends StatelessWidget {
 
             return DelayRender(
               delay: 300 * index,
+              loading: Container(
+                height: 120,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(Radius.circular(15)),
+                  color: Colors.black.withValues(alpha: 0.2),
+                ),
+              ),
               child: TaskBoard(
                 task: task,
               ),

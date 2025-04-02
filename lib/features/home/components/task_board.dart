@@ -25,7 +25,7 @@ class _TaskBoardState extends State<TaskBoard> {
     if (createdAt.toCompare() == today.toCompare()) {
       return Colors.white;
     } else {
-      return Colors.white.withOpacity(0.6);
+      return Colors.white.withValues(alpha: 0.6);
     }
   }
 
@@ -33,7 +33,7 @@ class _TaskBoardState extends State<TaskBoard> {
     if (createdAt.toCompare() == today.toCompare()) {
       return Colors.green[700]!;
     } else {
-      return Colors.white.withOpacity(0.15);
+      return Colors.white.withValues(alpha: 0.15);
     }
   }
 
@@ -75,7 +75,7 @@ class _TaskBoardState extends State<TaskBoard> {
                   gap: 2,
                   children: [
                     widget.task.title.text.fontSize(16).bold.color(Colors.white).height(1.2),
-                    widget.task.hour.text.fontSize(14).color(Colors.white.withOpacity(0.6)),
+                    widget.task.hour.text.fontSize(14).color(Colors.white.withValues(alpha: 0.6)),
                   ],
                 ),
               ),
@@ -96,13 +96,13 @@ class _TaskBoardState extends State<TaskBoard> {
                     );
 
                     return CircleAvatar(
-                      backgroundColor: hasCheck ? Colors.green : Colors.white.withOpacity(0.2),
+                      backgroundColor: hasCheck ? Colors.green : Colors.white.withValues(alpha: 0.2),
                       radius: 25,
                       child: IconButton(
                         iconSize: 30,
                         icon: Icon(
                           Icons.check,
-                          color: hasCheck ? Colors.white : Colors.white.withOpacity(0.6),
+                          color: hasCheck ? Colors.white : Colors.white.withValues(alpha: 0.6),
                         ),
                         onPressed: () {
                           if (currentCheck == null) {
@@ -115,13 +115,13 @@ class _TaskBoardState extends State<TaskBoard> {
                     );
                   },
                   noData: CircleAvatar(
-                    backgroundColor: Colors.white.withOpacity(0.2),
+                    backgroundColor: Colors.white.withValues(alpha: 0.2),
                     radius: 25,
                     child: IconButton(
                       iconSize: 30,
                       icon: Icon(
                         Icons.check,
-                        color: Colors.white.withOpacity(0.6),
+                        color: Colors.white.withValues(alpha: 0.6),
                       ),
                       onPressed: () {
                         CheckService.addCheck(widget.task);
