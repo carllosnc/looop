@@ -1,4 +1,4 @@
-package cnc.all_day
+package cnc.looop
 
 import io.flutter.embedding.android.FlutterActivity
 
