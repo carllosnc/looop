@@ -5,7 +5,7 @@ appTheme({required bool isLight}) => ThemeData(
       brightness: isLight ? Brightness.light : Brightness.dark,
       colorSchemeSeed: const Color.fromARGB(255, 30, 0, 255),
       fontFamily: 'SFProDisplay',
-      dialogTheme: DialogTheme(
+      dialogTheme: DialogThemeData(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),

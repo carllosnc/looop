@@ -52,14 +52,6 @@ class DefaultFirebaseOptions {
     }
   }
 
-  // static const FirebaseOptions android = FirebaseOptions(
-  //   apiKey: 'AIzaSyA4KQY0qQQ3Lfuj9CVEJAPLBIQ_O-k_8W4',
-  //   appId: '1:370804609161:android:f4f92cd25ab2ab6e303658',
-  //   messagingSenderId: '370804609161',
-  //   projectId: 'cnc-all-day',
-  //   storageBucket: 'cnc-all-day.firebasestorage.app',
-  // );
-
   static FirebaseOptions android = FirebaseOptions(
     apiKey: dotenv.env['apiKey']!,
     appId: dotenv.env['appId']!,
